@@ -1,4 +1,4 @@
-# Multibase
+# Multibase.cr
 
 Base transcoder for Base62, Base58, Base85 (RFC 1924), BaseN with multibyte character alphabet support.
 This library performs byte by byte transcodings and is not compatible with RFC 4648.
@@ -21,6 +21,18 @@ This library performs byte by byte transcodings and is not compatible with RFC 4
 
 ```crystal
 require "multibase"
+
+base62 = Multibase::Base62.encode("Hello World")
+p base62 # 73XpUgyMwkGr29M
+
+decoded = Multibase::Base62.decode("73XpUgyMwkGr29M")
+p String.new(decoded) # Hello World
+
+# custom transcoder
+transcoder = Multibase::Transcoder.new("123456789custom")
+
+# transcoder.encode()
+# transcoder.decode()
 ```
 
 ## Contributing
