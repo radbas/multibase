@@ -131,15 +131,15 @@ module Multibase::Base
 
   private def gmp_encode(data : Bytes, base : Int32) : Bytes
     LibGMP.init_set_str(out mpz, data.hexstring, 16)
-    ptr = LibGMP.get_str(nil, base, pointerof(mpz))
-    size = LibGMP.sizeinbase(pointerof(mpz), base).to_i
-    ptr.to_slice(size)
+    mp = pointerof(mpz)
+    size = LibGMP.sizeinbase(mp, base).to_i
+    LibGMP.get_str(nil, base, mp).to_slice(size)
   end
 
   private def gmp_decode(str : String, base : Int32) : Bytes
     LibGMP.init_set_str(out mpz, str, base)
-    ptr = LibGMP.get_str(nil, 16, pointerof(mpz))
-    size = LibGMP.sizeinbase(pointerof(mpz), 16).to_i
-    ptr.to_slice(size)
+    mp = pointerof(mpz)
+    size = LibGMP.sizeinbase(mp, 16).to_i
+    LibGMP.get_str(nil, 16, mp).to_slice(size)
   end
 end
